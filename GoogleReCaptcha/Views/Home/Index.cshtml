@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var siteKey = ViewData["SiteKey"] as string ?? "";
+}
+
+<h1>Sample Form with Google reCAPTCHA v3</h1>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert">@ViewBag.Message</div>
+}
+
+<form asp-action="Index" method="post">
+    <div>
+        <label for="name">Name</label>
+        <input id="name" name="name" />
+    </div>
+
+    <input type="hidden" id="g-recaptcha-response" name="gRecaptchaResponse" />
+
+    <button type="submit">Submit</button>
+    @Html.AntiForgeryToken()
+</form>
+
+<script src="https://www.google.com/recaptcha/api.js?render=@siteKey"></script>
+<script>
+    document.querySelector('form').addEventListener('submit', function (event) {
+        event.preventDefault();
+        grecaptcha.ready(function () {
+            grecaptcha.execute('@siteKey', { action: 'submit' }).then(function (token) {
+                document.getElementById('g-recaptcha-response').value = token;
+                event.target.submit();
+            });
+        });
+    });
+</script>

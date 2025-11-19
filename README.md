@@ -34,7 +34,7 @@ Copy:
 ### 2. Add Keys to `appsettings.json`
 
 ```json
-"RecaptchaV3": {
+"Recaptcha": {
   "SiteKey": "YOUR_SITE_KEY",
   "SecretKey": "YOUR_SECRET_KEY",
   "MinimumScore": 0.5
